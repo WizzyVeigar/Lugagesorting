@@ -6,7 +6,7 @@ namespace Lugagesorting
     {
         static void Main(string[] args)
         {
-            //
+            
         }
     }
 }

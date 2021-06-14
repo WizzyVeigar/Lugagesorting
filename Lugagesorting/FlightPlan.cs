@@ -4,11 +4,8 @@ using System.Text;
 
 namespace Lugagesorting
 {
-    class LugageProducer
+    class FlightPlan
     {
-        public void GenerateLugage()
-        {
 
-        }
     }
 }

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Lugagesorting
 {
+    /// <summary>
+    /// Manages all the classes used in the projekt
+    /// </summary>
     class Manager
     {
 

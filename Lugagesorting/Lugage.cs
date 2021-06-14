@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Lugagesorting
 {
+    /// <summary>
+    /// Lugage creater
+    /// </summary>
     class Lugage
     {
         private int _lugageNumber;
