@@ -13,16 +13,16 @@ namespace Lugagesorting
 
     class FlightPlan
     {
-        //FlyNr. , gatenr , Gateopen/close, 
-        private string _flightNumber;
+        //FlyNr. , gatenr , Gateopen/close,
+        private string _planeNumber;
         private int _gateNumber;
         private DateTime _gateOpen;
         private DateTime _gateClose;
 
-        public string FlightNumber
+        public string PlaneNumber
         {
-            get { return _flightNumber; }
-            set { _flightNumber = value; }
+            get { return _planeNumber; }
+            set { _planeNumber = value; }
         }
 
         public int GateNumber
@@ -42,7 +42,7 @@ namespace Lugagesorting
             set { _gateClose = value; }
         }
 
-        public FlightPlan(string flightNumber, int gateNumber, DateTime gateOpen, DateTime gateClose)
+        public FlightPlan(int flightNumber, int gateNumber, Destination destination, DateTime gateOpen, DateTime gateClose)
         {
 
         }

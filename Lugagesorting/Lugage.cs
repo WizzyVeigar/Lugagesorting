@@ -12,6 +12,10 @@ namespace Lugagesorting
         private int _lugageNumber;
         private int _passeengerNumber;
         private int _flightNumber;
+        private DateTime _timeStampCheckin;
+        private DateTime _timeStampSortingIn;
+        private DateTime _timeStampSoritingOut;
+        private DateTime _timeStampGate;
 
         public int LuageNumber
         {
@@ -31,12 +35,28 @@ namespace Lugagesorting
             set { _flightNumber = value; }
         }
 
-        private DateTime _timeStamp;
-
-        public DateTime TimeStamp
+        public DateTime TimeStampCheckin
         {
-            get { return _timeStamp; }
-            set { _timeStamp = value; }
+            get { return _timeStampCheckin; }
+            set { _timeStampCheckin = value; }
+        }
+
+        public DateTime TimeStampSortingIn
+        {
+            get { return _timeStampSortingIn; }
+            set { _timeStampSortingIn = value; }
+        }
+
+        public DateTime TimeStampSortingOut
+        {
+            get { return _timeStampSoritingOut; }
+            set { _timeStampSoritingOut = value; }
+        }
+
+        public DateTime TimeStampGate
+        {
+            get { return _timeStampGate; }
+            set { _timeStampGate = value; }
         }
 
 

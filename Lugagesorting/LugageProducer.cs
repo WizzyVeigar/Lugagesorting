@@ -6,9 +6,9 @@ namespace Lugagesorting
 {
     class LugageProducer
     {
-        public void GenerateLugage()
+        public void CreateLugage()
         {
-
+            Lugage lugage = new Lugage(12, 1, 1);
         }
     }
 }
