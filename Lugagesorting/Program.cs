@@ -13,6 +13,8 @@ namespace Lugagesorting
             //Create our manager thread
             Thread managerThread = new Thread(manager.SimulationStart);
             managerThread.Start();
+
+            manager.GenerateFlights();
         }
     }
 }

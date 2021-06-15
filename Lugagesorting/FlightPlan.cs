@@ -14,12 +14,12 @@ namespace Lugagesorting
     class FlightPlan
     {
         //FlyNr. , gatenr , Gateopen/close,
-        private string _planeNumber;
+        private int _planeNumber;
         private int _gateNumber;
         private DateTime _gateOpen;
         private DateTime _gateClose;
 
-        public string PlaneNumber
+        public int PlaneNumber
         {
             get { return _planeNumber; }
             set { _planeNumber = value; }

@@ -10,6 +10,7 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
+        Random random = new Random();
         Counter counter = new Counter();
         LugageProducer lugageProducer = new LugageProducer();
 
@@ -23,8 +24,6 @@ namespace Lugagesorting
 
         public void GenerateFlights()
         {
-            Random random = new Random();
-
             for (int i = 0; i < flightPlans.Length; i++)
             {
                 int planeNumber = random.Next(0, 100);
@@ -34,13 +33,22 @@ namespace Lugagesorting
 
                 FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)random.Next(0, 2), DateTime.Now, DateTime.Now);
                 flightPlans[i] = flightPlan;
-            }
-
-            for (int i = 0; i < flightPlans.Length; i++)
-            {
                 Console.WriteLine($"Fly {flightPlans[i].PlaneNumber} er nu i gate {flightPlans[i].GateNumber}. Gaten er åben fra {flightPlans[i].GateOpen} til {flightPlans[i].GateClose}");
-
             }
+        }
+
+        public void GenerateBagage()
+        {
+            for (int i = 0; i < 300; i++)
+            {
+                Lugage lugage = new Lugage(random.Next(0,20), random.Next(0,40), flightPlans[random.Next(0,50)].PlaneNumber);
+                queueLugages[i] = lugage;
+            }
+        }
+
+        public void GenerateGate()
+        {
+
         }
 
         public void SimulationStart()
@@ -48,7 +56,6 @@ namespace Lugagesorting
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
             //while (Thread.CurrentThread.IsAlive)
             //{
-            GenerateFlights();
             //Create queue
             Thread queueLugagesThread = new Thread(lugageProducer.CreateLugage);
             queueLugagesThread.Start();
@@ -62,6 +69,8 @@ namespace Lugagesorting
             //sorterThread.Start();
 
             //Create Gate
+            //Thread gateThread = new Thread();
+            //gateThread.Start();
 
             //Thread thread = new Thread();
             //If theres a long que (longer than x) open a new thread
