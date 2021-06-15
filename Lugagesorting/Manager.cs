@@ -18,7 +18,7 @@ namespace Lugagesorting
         static FlightPlan[] flightPlans = new FlightPlan[50];
         static Lugage[] counterBuffer = new Lugage[100];
         static Lugage[] gateBuffer = new Lugage[15];
-        static Lugage[] queueLugages = new Lugage[50];
+        static Lugage[] queueLugages = new Lugage[500];
         static Gate[] gates = new Gate[5];
         static Counter[] counters = new Counter[10];
 
@@ -26,23 +26,24 @@ namespace Lugagesorting
         {
             for (int i = 0; i < flightPlans.Length; i++)
             {
-                int planeNumber = random.Next(0, 100);
-                int gateNumber = random.Next(0, 5);
-
-                Console.WriteLine(planeNumber + " " + gateNumber);
-
-                FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)random.Next(0, 2), DateTime.Now, DateTime.Now);
+                FlightPlan flightPlan = new FlightPlan(random.Next(0, 300), random.Next(0, 5), (Destination)random.Next(0, 2), DateTime.Now, DateTime.Now);
                 flightPlans[i] = flightPlan;
-                Console.WriteLine($"Fly {flightPlans[i].PlaneNumber} er nu i gate {flightPlans[i].GateNumber}. Gaten er åben fra {flightPlans[i].GateOpen} til {flightPlans[i].GateClose}");
+                Console.WriteLine($"Plane {flightPlans[i].PlaneNumber} skal til gate {flightPlans[i].GateNumber}. Flyet går til {flightPlans[i].destinations}. Gaten er åben fra {flightPlans[i].GateOpen} til {flightPlans[i].GateClose}");
             }
         }
 
         public void GenerateBagage()
         {
-            for (int i = 0; i < 300; i++)
+            for (int i = 0; i < queueLugages.Length; i++)
             {
                 Lugage lugage = new Lugage(random.Next(0,20), random.Next(0,40), flightPlans[random.Next(0,50)].PlaneNumber);
                 queueLugages[i] = lugage;
+                Console.WriteLine($"Luggage {queueLugages[i].LugageNumber} is owned by passenger {queueLugages[i].PassengerNumber} and is going on flight {queueLugages[i].FlightNumber}");
+
+                if (true)
+                {
+
+                }
             }
         }
 

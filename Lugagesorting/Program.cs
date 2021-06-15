@@ -15,6 +15,9 @@ namespace Lugagesorting
             managerThread.Start();
 
             manager.GenerateFlights();
+
+            manager.GenerateBagage();
+
         }
     }
 }

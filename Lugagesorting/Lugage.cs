@@ -17,7 +17,7 @@ namespace Lugagesorting
         private DateTime _timeStampSoritingOut;
         private DateTime _timeStampGate;
 
-        public int LuageNumber
+        public int LugageNumber
         {
             get { return _lugageNumber; }
             set { _lugageNumber = value; }
@@ -62,7 +62,9 @@ namespace Lugagesorting
 
         public Lugage(int lugageNumber, int passengerNumber, int flightNumber)
         {
-
+            LugageNumber = lugageNumber;
+            PassengerNumber = passengerNumber;
+            FlightNumber = flightNumber;
         }
     }
 }

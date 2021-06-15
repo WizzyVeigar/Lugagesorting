@@ -8,18 +8,11 @@ namespace Lugagesorting
     class Counter
     {
         private int _counterNumber;
-        private bool _counterOpen;
 
         public int CounterNumber
         {
             get { return _counterNumber; }
             set { _counterNumber = value; }
-        }
-
-        public bool CounterOpen
-        {
-            get { return _counterOpen; }
-            set { _counterOpen = value; }
         }
 
         public Counter()
@@ -29,7 +22,7 @@ namespace Lugagesorting
 
         public Counter(int counterNumber)
         {
-
+            CounterNumber = counterNumber;
         }
 
         public void OpenCounter()
