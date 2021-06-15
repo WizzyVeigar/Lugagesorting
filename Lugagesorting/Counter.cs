@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lugagesorting
 {
-    class Checkin
+    class Counter
     {
         private int _counterNumber;
 
@@ -14,7 +14,7 @@ namespace Lugagesorting
             set { _counterNumber = value; }
         }
 
-        public Checkin(int counterNumber)
+        public Counter(int counterNumber)
         {
 
         }

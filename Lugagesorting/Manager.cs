@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lugagesorting
 {
@@ -9,22 +10,24 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
-
-        //Everything needs to run in here while the thread is alive. (While the program runs, this needs to run)
-        //       while (thread.isalive)
-        //{
-
-        static Lugage[] checkinBuffer = new Lugage[100];
+        //Setup all conveyor belts (CounterConveyorbelt, GateConveyorbelt, gates, and counters
+        static Lugage[] counterBuffer = new Lugage[100];
         static Lugage[] gateBuffer = new Lugage[15];
-        static Gate[] gates = new Gate[15];
-        static Checkin[] checkins = new Checkin[30];
+        static Gate[] gates = new Gate[5];
+        static Counter[] counters = new Counter[10];
 
-        //}
+        public void SimulationStart()
+        {
+            //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
+            while (Thread.CurrentThread.IsAlive)
+            {
+                //If theres a long que (longer than x) open a new thread
 
-        //Create a method which creates a new thread for all our threads to run in (manager thread), so it dosn't interfere with the main thread.
-
-        //If theres a long que (longer than x) open a new thread
-
-        //Every gate is a thread, every counter is a thread.
+                //Every gate is a thread, every counter is a thread.
+            }
+        }
     }
 }
+
+
+

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Lugagesorting
 {
@@ -6,7 +7,15 @@ namespace Lugagesorting
     {
         static void Main(string[] args)
         {
-            
+            //Create a new instance of our manager
+            Manager manager = new Manager();
+
+            //Create our manager thread
+            Thread managerThread = new Thread(manager.SimulationStart);
+            managerThread.Start();
+
+
+
         }
     }
 }
