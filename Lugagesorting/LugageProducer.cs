@@ -8,21 +8,31 @@ namespace Lugagesorting
     class LugageProducer
     {
         Random random = new Random();
-        static Lugage[] queueLugages = new Lugage[100];
 
         //static Lugage[] queueLugages = new Lugage[500];
         public void GenerateLugage()
         {
-            for (int i = 0; i < queueLugages.Length; i++)
+            while (Thread.CurrentThread.IsAlive)
             {
-                string lugageNumber = FlightProducer.flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
+                Monitor.TryEnter(Manager.queueLugages);
 
-                Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), FlightProducer.flightPlans[random.Next(0, 50)].PlaneNumber);
-                queueLugages[i] = lugage;
-                Console.WriteLine($"Luggage {queueLugages[i].LugageNumber} is going on flight {queueLugages[i].FlightNumber} and is owned by passenger {queueLugages[i].PassengerNumber}");
+                while (Manager.queueLugages[50] != null || Manager.flightPlans[50] == null)
+                {
+                    Monitor.Wait(Manager.queueLugages);
+                }
+
+                for (int i = 0; i < Manager.queueLugages.Length; i++)
+                {
+                    string lugageNumber = Manager.flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
+
+                    Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), Manager.flightPlans[random.Next(0, 50)].PlaneNumber);
+                    Manager.queueLugages[i] = lugage;
+                    Console.WriteLine($"Luggage {Manager.queueLugages[i].LugageNumber} is going on flight {Manager.queueLugages[i].FlightNumber} and is owned by passenger {Manager.queueLugages[i].PassengerNumber}");
+                }
+                Console.WriteLine();
+
+                Monitor.Exit(Manager.queueLugages);
             }
-            Console.WriteLine();
         }
-
     }
 }

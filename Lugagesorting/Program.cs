@@ -9,13 +9,17 @@ namespace Lugagesorting
         {
             //Create a new instance of our manager
             Manager manager = new Manager();
-            FlightProducer flightProducer = new FlightProducer();
-            LugageProducer lugageProducer = new LugageProducer();
+            Gate gate = new Gate();
+            Counter counter = new Counter();
 
             //Create our manager thread
             Thread managerThread = new Thread(manager.SimulationStart);
             managerThread.Start();
 
+            counter.generateCounters();
+
+            gate.GenerateGates();
+            
             //manager.GenerateFlights();
 
             //manager.GenerateBagage();
