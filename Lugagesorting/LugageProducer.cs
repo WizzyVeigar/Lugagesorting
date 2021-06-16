@@ -14,24 +14,25 @@ namespace Lugagesorting
         {
             while (Thread.CurrentThread.IsAlive)
             {
-                Monitor.TryEnter(Manager.queueLugages);
-
-                while (Manager.queueLugages[50] != null || Manager.flightPlans[50] == null)
+                if (Monitor.TryEnter(Manager.queueLugages))
                 {
-                    Monitor.Wait(Manager.queueLugages);
+                    while (Manager.queueLugages[49] != null || Manager.flightPlans[49] == null)
+                    {
+                        Monitor.Wait(Manager.queueLugages);
+                    }
+
+                    for (int i = 0; i < Manager.queueLugages.Length; i++)
+                    {
+                        string lugageNumber = Manager.flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
+
+                        Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), Manager.flightPlans[random.Next(0, 50)].PlaneNumber);
+                        Manager.queueLugages[i] = lugage;
+                        Console.WriteLine($"Luggage {Manager.queueLugages[i].LugageNumber} is going on flight {Manager.queueLugages[i].FlightNumber} and is owned by passenger {Manager.queueLugages[i].PassengerNumber}");
+                    }
+                    Console.WriteLine();
+
+                    Monitor.Exit(Manager.queueLugages);
                 }
-
-                for (int i = 0; i < Manager.queueLugages.Length; i++)
-                {
-                    string lugageNumber = Manager.flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
-
-                    Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), Manager.flightPlans[random.Next(0, 50)].PlaneNumber);
-                    Manager.queueLugages[i] = lugage;
-                    Console.WriteLine($"Luggage {Manager.queueLugages[i].LugageNumber} is going on flight {Manager.queueLugages[i].FlightNumber} and is owned by passenger {Manager.queueLugages[i].PassengerNumber}");
-                }
-                Console.WriteLine();
-
-                Monitor.Exit(Manager.queueLugages);
             }
         }
     }
