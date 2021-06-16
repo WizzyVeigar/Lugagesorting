@@ -10,101 +10,45 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
-        Random random = new Random();
-        //Counter counter = new Counter();
         LugageProducer lugageProducer = new LugageProducer();
-        //Gate gate = new Gate();
+        FlightProducer flightProducer = new FlightProducer();
 
-        //Setup all conveyor belts (CounterConveyorbelt, GateConveyorbelt, gates, and counters
-        static FlightPlan[] flightPlans = new FlightPlan[50];
-        static Lugage[] queueLugages = new Lugage[100];
         static Lugage[] counterBuffer = new Lugage[100];
         static Lugage[] gateBuffer = new Lugage[15];
-        static Gate[] gates = new Gate[5];
-        static Counter[] counters = new Counter[10];
 
-        public void GenerateFlights()
-        {
-            for (int i = 0; i < flightPlans.Length; i++)
-            {
-                int destination = random.Next(0, 3);
-                string destinationNumber = ((Destination)destination).ToString().ToUpper();
-                string planeNumber = destinationNumber[0].ToString() + destinationNumber[1].ToString() + (random.Next(0, 300)).ToString();
-                int gateNumber = random.Next(0, 5);
-
-                FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now, DateTime.Now);
-                flightPlans[i] = flightPlan;
-                Console.WriteLine($"Plane {flightPlans[i].PlaneNumber} skal til gate {flightPlans[i].GateNumber}. Flyet går til {flightPlans[i].destinations}. Gaten er åben fra {flightPlans[i].GateOpen} til {flightPlans[i].GateClose}");
-            }
-            Console.WriteLine();
-        }
-
-        public void GenerateBagage()
-        {
-            for (int i = 0; i < queueLugages.Length; i++)
-            {
-                string lugageNumber = flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
-
-                Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), flightPlans[random.Next(0, 50)].PlaneNumber);
-                queueLugages[i] = lugage;
-                Console.WriteLine($"Luggage {queueLugages[i].LugageNumber} is going on flight {queueLugages[i].FlightNumber} and is owned by passenger {queueLugages[i].PassengerNumber}");
-            }
-            Console.WriteLine();
-        }
-
-        public void GenerateGate()
-        {
-            for (int i = 0; i < gates.Length; i++)
-            {
-                Gate gate = new Gate(i +1);
-                gates[i] = gate;
-                Console.WriteLine($"Gate {gates[i].GateNumber} er nu oprettet");
-            }
-            Console.WriteLine();
-        }
-
-        public void generateCounter()
-        {
-            for (int i = 0; i < counters.Length; i++)
-            {
-                Counter counter = new Counter(i + 1);
-                counters[i] = counter;
-                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
-            }
-            Console.WriteLine();
-        }
+        Gate gate = new Gate();
+        Counter counter = new Counter();
+        FlightPlan flightPlan = new FlightPlan();
 
         public void SimulationStart()
         {
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
-            //while (Thread.CurrentThread.IsAlive)
-            //{
+            while (Thread.CurrentThread.IsAlive)
+            {
+                // ------DATA CREATERS------ //
 
-            //CreatePlanes
-            //Thread planeCreaterThread = new Thread();
-            //planeCreaterThread.Start();
+                //CreatePlanes
+                Thread planeCreaterThread = new Thread(lugageProducer.GenerateLugage);
+                planeCreaterThread.Start();
 
-            //Create queue
-            //Thread queueLugagesThread = new Thread(lugageProducer.CreateLugage);
-            //queueLugagesThread.Start();
+                //CreateLuage
+                Thread lugageCreaterThread = new Thread(flightProducer.GenerateFlights);
+                lugageCreaterThread.Start();
 
-            //Create Counter
-            //Thread counterThread = new Thread(counter.OpenCounter);
-            //counterThread.Start();
+                // ------DATA OPEN / CLOSE------ //
 
-            //Create Sorter
-            //Thread sorterThread = new Thread();
-            //sorterThread.Start();
+                ////OpenCounter
+                //Thread counterCreaterThread = new Thread();
+                //counterCreaterThread.Start();
 
-            //Create Gate
-            //Thread gateThread = new Thread();
-            //gateThread.Start();
+                ////Opengate
+                //Thread gateCreaterThread = new Thread();
+                //gateCreaterThread.Start();
 
-            //Thread thread = new Thread();
-            //If theres a long que (longer than x) open a new thread
-
-            //Every gate is a thread, every counter is a thread.
-            //}
+                ////RunSorter
+                //Thread sorterThread = new Thread();
+                //sorterThread.Start();
+            }
         }
     }
 }

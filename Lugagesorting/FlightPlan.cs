@@ -43,6 +43,11 @@ namespace Lugagesorting
             set { _gateClose = value; }
         }
 
+        public FlightPlan()
+        {
+
+        }
+
         public FlightPlan(string planeNumber, int gateNumber, Destination destination, DateTime gateOpen, DateTime gateClose)
         {
             PlaneNumber = planeNumber;

@@ -16,13 +16,13 @@ namespace Lugagesorting
             Thread managerThread = new Thread(manager.SimulationStart);
             managerThread.Start();
 
-            manager.GenerateFlights();
+            //manager.GenerateFlights();
 
-            manager.GenerateBagage();
+            //manager.GenerateBagage();
 
-            manager.GenerateGate();
+            //manager.GenerateGate();
 
-            manager.generateCounter();
+            //manager.generateCounter();
         }
     }
 }

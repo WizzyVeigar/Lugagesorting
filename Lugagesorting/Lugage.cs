@@ -59,11 +59,18 @@ namespace Lugagesorting
             set { _timeStampGate = value; }
         }
 
+        public Lugage()
+        {
+
+        }
+
         public Lugage(string lugageNumber, int passengerNumber, string flightNumber)
         {
             LugageNumber = lugageNumber;
             PassengerNumber = passengerNumber;
             FlightNumber = flightNumber;
         }
+
+
     }
 }

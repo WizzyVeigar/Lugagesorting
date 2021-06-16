@@ -7,6 +7,8 @@ namespace Lugagesorting
 {
     class Counter
     {
+        static Counter[] counters = new Counter[10];
+
         private int _counterNumber;
 
         public int CounterNumber
@@ -23,6 +25,17 @@ namespace Lugagesorting
         public Counter(int counterNumber)
         {
             CounterNumber = counterNumber;
+        }
+
+        public void generateCounters()
+        {
+            for (int i = 0; i < counters.Length; i++)
+            {
+                Counter counter = new Counter(i + 1);
+                counters[i] = counter;
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
+            }
+            Console.WriteLine();
         }
 
         public void OpenCounter()
