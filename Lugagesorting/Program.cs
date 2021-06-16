@@ -21,6 +21,8 @@ namespace Lugagesorting
             manager.GenerateBagage();
 
             manager.GenerateGate();
+
+            manager.generateCounter();
         }
     }
 }

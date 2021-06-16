@@ -7,7 +7,7 @@ namespace Lugagesorting
     public enum Destination
     {
         Germany,
-        Holland,
+        Netherlands,
         Finland
     }
 

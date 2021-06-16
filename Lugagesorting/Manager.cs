@@ -11,7 +11,7 @@ namespace Lugagesorting
     class Manager
     {
         Random random = new Random();
-        Counter counter = new Counter();
+        //Counter counter = new Counter();
         LugageProducer lugageProducer = new LugageProducer();
         //Gate gate = new Gate();
 
@@ -27,8 +27,8 @@ namespace Lugagesorting
         {
             for (int i = 0; i < flightPlans.Length; i++)
             {
-                int destination = random.Next(0, 2);
-                string destinationNumber = ((Destination)destination).ToString();
+                int destination = random.Next(0, 3);
+                string destinationNumber = ((Destination)destination).ToString().ToUpper();
                 string planeNumber = destinationNumber[0].ToString() + destinationNumber[1].ToString() + (random.Next(0, 300)).ToString();
                 int gateNumber = random.Next(0, 5);
 
@@ -36,18 +36,20 @@ namespace Lugagesorting
                 flightPlans[i] = flightPlan;
                 Console.WriteLine($"Plane {flightPlans[i].PlaneNumber} skal til gate {flightPlans[i].GateNumber}. Flyet går til {flightPlans[i].destinations}. Gaten er åben fra {flightPlans[i].GateOpen} til {flightPlans[i].GateClose}");
             }
+            Console.WriteLine();
         }
 
         public void GenerateBagage()
         {
             for (int i = 0; i < queueLugages.Length; i++)
             {
-                string lugageNumber = random.Next(0, 50) + flightPlans[random.Next(0, 50)].PlaneNumber;
+                string lugageNumber = flightPlans[random.Next(0, 50)].PlaneNumber + random.Next(0, 50);
 
                 Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), flightPlans[random.Next(0, 50)].PlaneNumber);
                 queueLugages[i] = lugage;
-                Console.WriteLine($"Luggage {queueLugages[i].LugageNumber} is owned by passenger {queueLugages[i].PassengerNumber} and is going on flight {queueLugages[i].FlightNumber}");
+                Console.WriteLine($"Luggage {queueLugages[i].LugageNumber} is going on flight {queueLugages[i].FlightNumber} and is owned by passenger {queueLugages[i].PassengerNumber}");
             }
+            Console.WriteLine();
         }
 
         public void GenerateGate()
@@ -56,8 +58,20 @@ namespace Lugagesorting
             {
                 Gate gate = new Gate(i +1);
                 gates[i] = gate;
-                Console.WriteLine(gates[i].GateNumber);
+                Console.WriteLine($"Gate {gates[i].GateNumber} er nu oprettet");
             }
+            Console.WriteLine();
+        }
+
+        public void generateCounter()
+        {
+            for (int i = 0; i < counters.Length; i++)
+            {
+                Counter counter = new Counter(i + 1);
+                counters[i] = counter;
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
+            }
+            Console.WriteLine();
         }
 
         public void SimulationStart()
@@ -75,8 +89,8 @@ namespace Lugagesorting
             //queueLugagesThread.Start();
 
             //Create Counter
-            Thread counterThread = new Thread(counter.OpenCounter);
-            counterThread.Start();
+            //Thread counterThread = new Thread(counter.OpenCounter);
+            //counterThread.Start();
 
             //Create Sorter
             //Thread sorterThread = new Thread();
