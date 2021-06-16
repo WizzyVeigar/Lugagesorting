@@ -9,6 +9,8 @@ namespace Lugagesorting
         {
             //Create a new instance of our manager
             Manager manager = new Manager();
+            FlightProducer flightProducer = new FlightProducer();
+            LugageProducer lugageProducer = new LugageProducer();
 
             //Create our manager thread
             Thread managerThread = new Thread(manager.SimulationStart);
@@ -18,6 +20,7 @@ namespace Lugagesorting
 
             manager.GenerateBagage();
 
+            manager.GenerateGate();
         }
     }
 }

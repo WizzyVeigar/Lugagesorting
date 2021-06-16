@@ -16,7 +16,7 @@ namespace Lugagesorting
 
         public Gate(int gateNumber)
         {
-
+            GateNumber = gateNumber;
         }
     }
 }

@@ -9,15 +9,15 @@ namespace Lugagesorting
     /// </summary>
     class Lugage
     {
-        private int _lugageNumber;
+        private string _lugageNumber;
         private int _passeengerNumber;
-        private int _flightNumber;
+        private string _flightNumber;
         private DateTime _timeStampCheckin;
         private DateTime _timeStampSortingIn;
         private DateTime _timeStampSoritingOut;
         private DateTime _timeStampGate;
 
-        public int LugageNumber
+        public string LugageNumber
         {
             get { return _lugageNumber; }
             set { _lugageNumber = value; }
@@ -29,7 +29,7 @@ namespace Lugagesorting
             set { _passeengerNumber = value; }
         }
 
-        public int FlightNumber
+        public string FlightNumber
         {
             get { return _flightNumber; }
             set { _flightNumber = value; }
@@ -59,8 +59,7 @@ namespace Lugagesorting
             set { _timeStampGate = value; }
         }
 
-
-        public Lugage(int lugageNumber, int passengerNumber, int flightNumber)
+        public Lugage(string lugageNumber, int passengerNumber, string flightNumber)
         {
             LugageNumber = lugageNumber;
             PassengerNumber = passengerNumber;
