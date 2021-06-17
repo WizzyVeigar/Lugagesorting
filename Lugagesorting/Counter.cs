@@ -48,17 +48,23 @@ namespace Lugagesorting
             {
                 Counter counter = new Counter(i + 1, false);
                 counters[i] = counter;
-                counters[i] = new Thread(CheckLugageQueue);
-                counters[i].Name = "WhateverName" + i;
-                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet, og er (open)?: {counters[i].CounterOpen}");
+                Thread t = new Thread(CheckLugageQueue);
+                int counterThreadNumber = i + 1;
+                t.Name = "Counter" + counterThreadNumber + "Thread";
+                t.Start();
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet, og er (open)?: {counters[i].CounterOpen}. Counteren har thread: {t.Name}");
+
             }
             Console.WriteLine();
         }
         public void CheckLugageQueue()
         {
-            if (Manager.queueLugages[10] != null)
+            if (Monitor.TryEnter(counters))
             {
-                OpenCounter();
+                if (Manager.queueLugages[0] != null)
+                {
+                    OpenCounter();
+                }
             }
         }
 
@@ -67,6 +73,7 @@ namespace Lugagesorting
             if (Thread.CurrentThread.IsAlive)
             {
                 CounterOpen = true;
+                Console.WriteLine("Counter is now open");
             }
         }
     }

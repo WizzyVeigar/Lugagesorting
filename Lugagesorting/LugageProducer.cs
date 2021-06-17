@@ -28,6 +28,7 @@ namespace Lugagesorting
                         Lugage lugage = new Lugage(lugageNumber, random.Next(0, 40), Manager.flightPlans[random.Next(0, 50)].PlaneNumber);
                         Manager.queueLugages[i] = lugage;
                         Console.WriteLine($"Luggage {Manager.queueLugages[i].LugageNumber} is going on flight {Manager.queueLugages[i].FlightNumber} and is owned by passenger {Manager.queueLugages[i].PassengerNumber}");
+                        Thread.Sleep(500);
                     }
                     Console.WriteLine();
 
