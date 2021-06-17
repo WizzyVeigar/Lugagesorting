@@ -7,8 +7,6 @@ namespace Lugagesorting
 {
     class Counter
     {
-        static Counter[] counters = new Counter[10];
-
         private int _counterNumber;
         private bool _open;
 

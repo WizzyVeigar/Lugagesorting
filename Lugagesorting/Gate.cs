@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lugagesorting
 {
     class Gate
     {
-        Gate[] gates = new Gate[5];
-
+        private Lugage[] _gateBuffer = new Lugage[15];
         private int _gateNumber;
-        private bool _open;
-        private string _planeNumber;
+        private bool _open = false;
+        private Thread _t;
 
         public int GateNumber
         {
@@ -23,32 +23,32 @@ namespace Lugagesorting
             get { return _open; }
             set { _open = value; }
         }
-
-        public string PlaneNumber
+        
+        public Lugage[] GateBuffer
         {
-            get { return _planeNumber; }
-            set { _planeNumber = value; }
+            get { return _gateBuffer; }
+            set { _gateBuffer = value; }
         }
 
-        public Gate()
+        public Thread T
         {
-
+            get { return _t; }
+            set { _t = value; }
         }
-        public Gate(int gateNumber, bool gateOpen)
+
+        public Gate(int gateNumber)
         {
             GateNumber = gateNumber;
-            Open = gateOpen;
+            T = new Thread(Worker);
+            T.Start();
         }
 
-        public void GenerateGates()
+        public void Worker()
         {
-            for (int i = 0; i < gates.Length; i++)
+            while (true)
             {
-                Gate gate = new Gate(i + 1, false);
-                gates[i] = gate;
-                Console.WriteLine($"Gate {gates[i].GateNumber} er nu oprettet, og er (open)?:{gates[i].Open}");
+                
             }
-            Console.WriteLine();
         }
     }
 }
