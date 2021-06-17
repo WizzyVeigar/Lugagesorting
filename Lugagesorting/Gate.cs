@@ -7,9 +7,9 @@ namespace Lugagesorting
 {
     class Gate
     {
-        private Lugage[] _gateBuffer = new Lugage[15];
         private int _gateNumber;
         private bool _open = false;
+        private Lugage[] _gateBuffer = new Lugage[15];
         private Thread _t;
 
         public int GateNumber
@@ -47,7 +47,7 @@ namespace Lugagesorting
         {
             while (true)
             {
-                
+
             }
         }
     }

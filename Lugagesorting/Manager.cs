@@ -11,21 +11,15 @@ namespace Lugagesorting
     class Manager
     {
         public static Gate[] gates = new Gate[6];
-        public static Counter[] counters = new Counter[10];
+        public static Counter[] counters = new Counter[11];
 
         LugageProducer lugageProducer = new LugageProducer();
         FlightProducer flightProducer = new FlightProducer();
 
-        public static FlightPlan[] flightPlans = new FlightPlan[5];
+        public static FlightPlan[] flightPlans = new FlightPlan[10];
         public static Lugage[] queueLugages = new Lugage[100];
 
         static Lugage[] counterBuffer = new Lugage[100];
-        
-
-
-
-        Counter counter = new Counter();
-        FlightPlan flightPlan = new FlightPlan();
 
         public void SimulationStart()
         {
@@ -41,6 +35,13 @@ namespace Lugagesorting
             for (int i = 1; i < gates.Length; i++)
             {
                 gates[i] = new Gate(i);
+                Console.WriteLine($"Gate: {gates[i].GateNumber} has been created");
+            }
+
+            for (int i = 1; i < counters.Length; i++)
+            {
+                counters[i] = new Counter(i);
+                Console.WriteLine($"Counter: {counters[i].CounterNumber} has been created");
             }
 
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
