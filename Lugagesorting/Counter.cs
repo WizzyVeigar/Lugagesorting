@@ -58,7 +58,7 @@ namespace Lugagesorting
                     {
                         string lugageNumber = Manager.flightPlans[random.Next(0, 9)].PlaneNumber + random.Next(0, 9);
 
-                        Lugage lugage = new Lugage(lugageNumber, random.Next(1,40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
+                        Lugage lugage = new Lugage(lugageNumber, random.Next(1, 40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
                         CounterLugageQueue[i] = lugage;
                         Console.WriteLine($"Lugage {lugageNumber} is going on flight {CounterLugageQueue[i].FlightNumber} and is owned by {CounterLugageQueue[i].PassengerNumber}");
                     }
