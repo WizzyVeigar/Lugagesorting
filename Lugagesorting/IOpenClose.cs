@@ -4,13 +4,8 @@ using System.Text;
 
 namespace Lugagesorting
 {
-    class IOpenClose
+    public interface IOpenClose
     {
-        private bool _open;
-        public bool Open
-        {
-            get { return _open; }
-            set { _open = value; }
-        }
+        bool IsOpen { get; set; }
     }
 }

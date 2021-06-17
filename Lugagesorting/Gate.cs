@@ -5,10 +5,10 @@ using System.Threading;
 
 namespace Lugagesorting
 {
-    class Gate
+    class Gate : IOpenClose
     {
         private int _gateNumber;
-        private bool _open = false;
+        private bool _isOpen = false;
         private Lugage[] _gateBuffer = new Lugage[15];
         private Thread _t;
 
@@ -18,10 +18,10 @@ namespace Lugagesorting
             set { _gateNumber = value; }
         }
         
-        public bool Open
+        public bool IsOpen
         {
-            get { return _open; }
-            set { _open = value; }
+            get { return _isOpen; }
+            set { _isOpen = value; }
         }
         
         public Lugage[] GateBuffer
