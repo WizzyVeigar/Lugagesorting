@@ -73,8 +73,13 @@ namespace Lugagesorting
             if (Thread.CurrentThread.IsAlive)
             {
                 CounterOpen = true;
-                Console.WriteLine("Counter is now open");
+                Console.WriteLine($"Counter: {CounterNumber} is now open");
             }
+        }
+
+        public void CheckLugageIn()
+        {
+
         }
     }
 }
