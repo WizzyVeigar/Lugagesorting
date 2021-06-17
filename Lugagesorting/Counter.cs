@@ -10,8 +10,7 @@ namespace Lugagesorting
         static Counter[] counters = new Counter[10];
 
         private int _counterNumber;
-        private bool _counterOpen;
-        private string _counterGateConnection;
+        private bool _open;
 
         public int CounterNumber
         {
@@ -19,16 +18,10 @@ namespace Lugagesorting
             set { _counterNumber = value; }
         }
 
-        public bool CounterOpen
+        public bool Open
         {
-            get { return _counterOpen; }
-            set { _counterOpen = value; }
-        }
-
-        public string CounterGateConnection
-        {
-            get { return _counterGateConnection; }
-            set { _counterGateConnection = value; }
+            get { return _open; }
+            set { _open = value; }
         }
 
         public Counter()
@@ -39,7 +32,7 @@ namespace Lugagesorting
         public Counter(int counterNumber, bool counterOpen)
         {
             CounterNumber = counterNumber;
-            CounterOpen = counterOpen;
+            Open = counterOpen;
         }
 
         public void generateCounters()
@@ -52,7 +45,7 @@ namespace Lugagesorting
                 int counterThreadNumber = i + 1;
                 t.Name = "Counter" + counterThreadNumber + "Thread";
                 t.Start();
-                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet, og er (open)?: {counters[i].CounterOpen}. Counteren har thread: {t.Name}");
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet, og er (open)?: {counters[i].Open}. Counteren har thread: {t.Name}");
 
             }
             Console.WriteLine();
@@ -72,14 +65,26 @@ namespace Lugagesorting
         {
             if (Thread.CurrentThread.IsAlive)
             {
-                CounterOpen = true;
+                Open = true;
                 Console.WriteLine($"Counter: {CounterNumber} is now open");
             }
         }
 
         public void CheckLugageIn()
         {
-
+            if (Thread.CurrentThread.IsAlive)
+            {
+                //if gate is closed
+                if (true)
+                {
+                    //Don't allow checkin
+                }
+                //if gate isn't closed
+                else
+                {
+                    //Take lugage from que, add to counterBuffer (Big conveyorbelt)
+                }
+            }
         }
     }
 }

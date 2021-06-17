@@ -13,7 +13,7 @@ namespace Lugagesorting
         LugageProducer lugageProducer = new LugageProducer();
         FlightProducer flightProducer = new FlightProducer();
 
-        public static FlightPlan[] flightPlans = new FlightPlan[50];
+        public static FlightPlan[] flightPlans = new FlightPlan[5];
         public static Lugage[] queueLugages = new Lugage[100];
 
         static Lugage[] counterBuffer = new Lugage[100];
