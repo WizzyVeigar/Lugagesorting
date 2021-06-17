@@ -7,9 +7,10 @@ namespace Lugagesorting
 {
     class Counter: IOpenClose
     {
+        Random random = new Random();
         private int _counterNumber;
         private bool _isOpen = false;
-        private Lugage[] _counterLugageQueue = new Lugage[15];
+        public Lugage[] _counterLugageQueue = new Lugage[15];
         private Thread _t;
 
         public int CounterNumber
@@ -17,8 +18,6 @@ namespace Lugagesorting
             get { return _counterNumber; }
             set { _counterNumber = value; }
         }
-
-        private bool _counterOpen;
 
         public bool IsOpen
         {
@@ -48,9 +47,27 @@ namespace Lugagesorting
         {
             while (true)
             {
+                if (Monitor.TryEnter(CounterLugageQueue))
+                {
+                    while (CounterLugageQueue[14] != null || Manager.flightPlans[9] == null)
+                    {
+                        Monitor.Wait(CounterLugageQueue);
+                    }
 
+                    for (int i = 0; i < CounterLugageQueue.Length; i++)
+                    {
+                        string lugageNumber = Manager.flightPlans[random.Next(0, 9)].PlaneNumber + random.Next(0, 9);
+
+                        Lugage lugage = new Lugage(lugageNumber, random.Next(1,40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
+                        CounterLugageQueue[i] = lugage;
+                        Console.WriteLine($"Lugage {lugageNumber} is going on flight {CounterLugageQueue[i].FlightNumber} and is owned by {CounterLugageQueue[i].PassengerNumber}");
+                    }
+                    Monitor.Pulse(CounterLugageQueue);
+                    Monitor.Exit(CounterLugageQueue);
+                }
             }
         }
+
         //public void generateCounters()
         //{
         //    for (int i = 0; i < counters.Length; i++)

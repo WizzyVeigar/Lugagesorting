@@ -34,6 +34,7 @@ namespace Lugagesorting
                     }
                     Console.WriteLine();
 
+                    Monitor.PulseAll(Manager.flightPlans);
                     Monitor.Exit(Manager.flightPlans);
                 }
             }

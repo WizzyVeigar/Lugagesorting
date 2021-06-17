@@ -11,7 +11,7 @@ namespace Lugagesorting
         Finland
     }
 
-    class FlightPlan : IOpenClose
+    class FlightPlan
     {
         private string _planeNumber;
         private int _gateNumber;

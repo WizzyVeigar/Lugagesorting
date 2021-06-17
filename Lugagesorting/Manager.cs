@@ -25,11 +25,11 @@ namespace Lugagesorting
         {
             // ------DATA CREATERS------ //
             //CreateLuage
-            Thread lugageCreaterThread = new Thread(flightProducer.GenerateFlights);
-            lugageCreaterThread.Start();
+            //Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            //lugageCreaterThread.Start();
 
             //CreatePlanes
-            Thread planeCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            Thread planeCreaterThread = new Thread(flightProducer.GenerateFlights);
             planeCreaterThread.Start();
 
             for (int i = 1; i < gates.Length; i++)
