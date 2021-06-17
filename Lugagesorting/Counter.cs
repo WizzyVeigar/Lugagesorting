@@ -45,8 +45,30 @@ namespace Lugagesorting
 
         public void Worker()
         {
-            while (true)
+            while (Thread.CurrentThread.IsAlive)
             {
+                //While the counter is open, do the following
+                while (IsOpen)
+                {
+                    //Try and enter a thread using the lugage que as a lock
+                    if (Monitor.TryEnter(CounterLugageQueue))
+                    {
+                        //If the counter is open
+                        if (IsOpen)
+                        {
+                            //And the lugageu queue is empty
+                            while (CounterLugageQueue[0] == null)
+                            {
+                                //tell the thread to wait for 2 seconds.
+                                Monitor.Wait(CounterLugageQueue, 2000);
+                            }
+                        }
+
+                        //Start checking in lugage.
+                    }
+                }
+
+
                 if (Monitor.TryEnter(CounterLugageQueue))
                 {
                     while (CounterLugageQueue[14] != null || Manager.flightPlans[9] == null)
