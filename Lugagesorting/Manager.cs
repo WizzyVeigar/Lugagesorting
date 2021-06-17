@@ -10,33 +10,42 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
+        public static Gate[] gates = new Gate[6];
+        public static Counter[] counters = new Counter[10];
+
         LugageProducer lugageProducer = new LugageProducer();
         FlightProducer flightProducer = new FlightProducer();
 
-        public static FlightPlan[] flightPlans = new FlightPlan[50];
-        public static Lugage[] queueLugages = new Lugage[50];
+        public static FlightPlan[] flightPlans = new FlightPlan[5];
+        public static Lugage[] queueLugages = new Lugage[100];
 
         static Lugage[] counterBuffer = new Lugage[100];
-        static Lugage[] gateBuffer = new Lugage[15];
+        
 
-        Gate gate = new Gate();
+
+
         Counter counter = new Counter();
         FlightPlan flightPlan = new FlightPlan();
 
         public void SimulationStart()
         {
+            // ------DATA CREATERS------ //
+            //CreateLuage
+            Thread lugageCreaterThread = new Thread(flightProducer.GenerateFlights);
+            lugageCreaterThread.Start();
+
+            //CreatePlanes
+            Thread planeCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            planeCreaterThread.Start();
+
+            for (int i = 1; i < gates.Length; i++)
+            {
+                gates[i] = new Gate(i);
+            }
+
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
             while (Thread.CurrentThread.IsAlive)
             {
-                // ------DATA CREATERS------ //
-                //CreateLuage
-                Thread lugageCreaterThread = new Thread(flightProducer.GenerateFlights);
-                lugageCreaterThread.Start();
-
-                //CreatePlanes
-                Thread planeCreaterThread = new Thread(lugageProducer.GenerateLugage);
-                planeCreaterThread.Start();
-
                 // ------DATA OPEN / CLOSE------ //
 
                 ////OpenCounter

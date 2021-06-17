@@ -1,39 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Lugagesorting
 {
     class Gate
     {
-        Gate[] gates = new Gate[5];
-
+        private Lugage[] _gateBuffer = new Lugage[15];
         private int _gateNumber;
+        private bool _open = false;
+        private Thread _t;
 
         public int GateNumber
         {
             get { return _gateNumber; }
             set { _gateNumber = value; }
         }
-
-        public Gate()
+        
+        public bool Open
         {
-
+            get { return _open; }
+            set { _open = value; }
         }
+        
+        public Lugage[] GateBuffer
+        {
+            get { return _gateBuffer; }
+            set { _gateBuffer = value; }
+        }
+
+        public Thread T
+        {
+            get { return _t; }
+            set { _t = value; }
+        }
+
         public Gate(int gateNumber)
         {
             GateNumber = gateNumber;
+            T = new Thread(Worker);
+            T.Start();
         }
 
-        public void GenerateGates()
+        public void Worker()
         {
-            for (int i = 0; i < gates.Length; i++)
+            while (true)
             {
-                Gate gate = new Gate(i + 1);
-                gates[i] = gate;
-                Console.WriteLine($"Gate {gates[i].GateNumber} er nu oprettet");
+                
             }
-            Console.WriteLine();
         }
     }
 }

@@ -7,9 +7,8 @@ namespace Lugagesorting
 {
     class Counter
     {
-        static Counter[] counters = new Counter[10];
-
         private int _counterNumber;
+        private bool _open;
 
         public int CounterNumber
         {
@@ -34,6 +33,7 @@ namespace Lugagesorting
         public Counter(int counterNumber, bool counterOpen)
         {
             CounterNumber = counterNumber;
+            Open = counterOpen;
         }
 
         public void generateCounters()
@@ -42,16 +42,44 @@ namespace Lugagesorting
             {
                 Counter counter = new Counter(i + 1, false);
                 counters[i] = counter;
-                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet og er lukket: {counters[i].CounterOpen}");
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
             }
             Console.WriteLine();
+        }
+        public void CheckLugageQueue()
+        {
+            if (Monitor.TryEnter(counters))
+            {
+                if (Manager.queueLugages[0] != null)
+                {
+                    OpenCounter();
+                }
+            }
         }
 
         public void OpenCounter()
         {
             if (Thread.CurrentThread.IsAlive)
             {
-                //Console.WriteLine("Skranke " + CounterNumber + " er nu åben");
+                Open = true;
+                Console.WriteLine($"Counter: {CounterNumber} is now open");
+            }
+        }
+
+        public void CheckLugageIn()
+        {
+            if (Thread.CurrentThread.IsAlive)
+            {
+                //if gate is closed
+                if (true)
+                {
+                    //Don't allow checkin
+                }
+                //if gate isn't closed
+                else
+                {
+                    //Take lugage from que, add to counterBuffer (Big conveyorbelt)
+                }
             }
         }
     }
