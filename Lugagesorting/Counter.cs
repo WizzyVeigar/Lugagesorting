@@ -10,11 +10,17 @@ namespace Lugagesorting
         static Counter[] counters = new Counter[10];
 
         private int _counterNumber;
-
+        private bool _counterOpen;
         public int CounterNumber
         {
             get { return _counterNumber; }
             set { _counterNumber = value; }
+        }
+
+        public bool CounterOpen
+        {
+            get { return _counterOpen; }
+            set { _counterOpen = value; }
         }
 
         public Counter()
