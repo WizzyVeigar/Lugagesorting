@@ -17,12 +17,21 @@ namespace Lugagesorting
             set { _counterNumber = value; }
         }
 
+        private bool _counterOpen;
+
+        public bool CounterOpen
+        {
+            get { return _counterOpen; }
+            set { _counterOpen = value; }
+        }
+
+
         public Counter()
         {
 
         }
 
-        public Counter(int counterNumber)
+        public Counter(int counterNumber, bool counterOpen)
         {
             CounterNumber = counterNumber;
         }
@@ -31,9 +40,9 @@ namespace Lugagesorting
         {
             for (int i = 0; i < counters.Length; i++)
             {
-                Counter counter = new Counter(i + 1);
+                Counter counter = new Counter(i + 1, false);
                 counters[i] = counter;
-                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
+                Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet og er lukket: {counters[i].CounterOpen}");
             }
             Console.WriteLine();
         }
