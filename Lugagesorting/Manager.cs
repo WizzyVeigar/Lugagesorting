@@ -17,7 +17,7 @@ namespace Lugagesorting
         FlightProducer flightProducer = new FlightProducer();
 
         public static FlightPlan[] flightPlans = new FlightPlan[10];
-        public static Lugage[] queueLugages = new Lugage[100];
+        public static Lugage[] mainConveyorBelt = new Lugage[100];
 
         static Lugage[] counterBuffer = new Lugage[100];
 
@@ -36,13 +36,13 @@ namespace Lugagesorting
             }
 
             // ------DATA CREATERS------ //
-            //CreateLuage
-            Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
-            lugageCreaterThread.Start();
-
             //CreatePlanes
             Thread planeCreaterThread = new Thread(flightProducer.GenerateFlights);
             planeCreaterThread.Start();
+
+            //CreateLuage
+            Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            lugageCreaterThread.Start();
 
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
             while (Thread.CurrentThread.IsAlive)

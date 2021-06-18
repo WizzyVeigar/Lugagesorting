@@ -30,15 +30,11 @@ namespace Lugagesorting
             get { return _gateNumber; }
             set { _gateNumber = value; }
         }
+
         public DateTime DepartureTime
         {
             get { return _departureTime; }
             set { _departureTime = value; }
-        }
-
-        public FlightPlan()
-        {
-
         }
 
         public FlightPlan(string planeNumber, int gateNumber, Destination destination, DateTime departureTime)

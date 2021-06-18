@@ -9,7 +9,7 @@ namespace Lugagesorting
     {
         Random random = new Random();
         private int _counterNumber;
-        private bool _isOpen = false;
+        private bool _isOpen = true;
         public Lugage[] _counterLugageQueue = new Lugage[15];
         private int _arrayIndex = 0;
         private Thread _t;
