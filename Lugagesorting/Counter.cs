@@ -72,7 +72,11 @@ namespace Lugagesorting
                 }
             }
         }
-
+        /// <summary>
+        /// Adds lugages to our counter's lugage queue, if the counter is open.
+        /// </summary>
+        /// <param name="lugage">used to make an arrayindex into a piece of lugage</param>
+        /// <returns>true or false wether theres room for lugage</returns>
         public bool AddToCheckinQueue(Lugage lugage)
         {
             if (_arrayIndex >= CounterLugageQueue.Length)
@@ -85,6 +89,10 @@ namespace Lugagesorting
             return true;
         }
 
+        /// <summary>
+        /// Retrieves the lugage from the queue so it can be chekced in.
+        /// </summary>
+        /// <returns>Either null or the temp lugage from array index 1, so that it consumes from the array as a queue.</returns>
         public Lugage RetrieveFromQueue()
         {
             if (CounterLugageQueue[0] == null)
