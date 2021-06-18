@@ -22,9 +22,9 @@ namespace Lugagesorting
                         if (Monitor.TryEnter(counter.CounterLugageQueue))
                         {
                             string lugageNumber = Manager.flightPlans[random.Next(0, 9)].PlaneNumber.ToString() + random.Next(0, 40).ToString();
-                            Lugage lugage = new Lugage(lugageNumber, random.Next(1, 40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
+                            Lugage lugage = new Lugage(lugageNumber, random.Next(1, 10000), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
 
-                            Console.WriteLine($"Lugage {lugage.LugageNumber} has bene created, og er ejet af {lugage.PassengerNumber}, and is going on flight");
+                            Console.WriteLine($"Lugage {lugage.LugageNumber} has bene created");
 
                             while (!counter.AddToCheckinQueue(lugage))
                             {
