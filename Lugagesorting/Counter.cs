@@ -11,6 +11,7 @@ namespace Lugagesorting
         private int _counterNumber;
         private bool _isOpen = false;
         public Lugage[] _counterLugageQueue = new Lugage[15];
+        private int _arrayIndex = 0;
         private Thread _t;
 
         public int CounterNumber
@@ -24,6 +25,7 @@ namespace Lugagesorting
             get { return _isOpen; }
             set { _isOpen = value; }
         }
+
         public Lugage[] CounterLugageQueue
         {
             get { return _counterLugageQueue; }
@@ -65,76 +67,42 @@ namespace Lugagesorting
                         }
 
                         //Start checking in lugage.
+
                     }
-                }
-
-
-                if (Monitor.TryEnter(CounterLugageQueue))
-                {
-                    while (CounterLugageQueue[14] != null || Manager.flightPlans[9] == null)
-                    {
-                        Monitor.Wait(CounterLugageQueue);
-                    }
-
-                    for (int i = 0; i < CounterLugageQueue.Length; i++)
-                    {
-                        string lugageNumber = Manager.flightPlans[random.Next(0, 9)].PlaneNumber + random.Next(0, 9);
-
-                        Lugage lugage = new Lugage(lugageNumber, random.Next(1, 40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
-                        CounterLugageQueue[i] = lugage;
-                        Console.WriteLine($"Lugage {lugageNumber} is going on flight {CounterLugageQueue[i].FlightNumber} and is owned by {CounterLugageQueue[i].PassengerNumber}");
-                    }
-                    Monitor.Pulse(CounterLugageQueue);
-                    Monitor.Exit(CounterLugageQueue);
                 }
             }
         }
 
-        //public void generateCounters()
-        //{
-        //    for (int i = 0; i < counters.Length; i++)
-        //    {
-        //        Counter counter = new Counter(i + 1, false);
-        //        counters[i] = counter;
-        //        Console.WriteLine($"Counter {counters[i].CounterNumber} er nu oprettet");
-        //    }
-        //    Console.WriteLine();
-        //}
-        //public void CheckLugageQueue()
-        //{
-        //    if (Monitor.TryEnter(counters))
-        //    {
-        //        if (Manager.queueLugages[0] != null)
-        //        {
-        //            OpenCounter();
-        //        }
-        //    }
-        //}
+        public bool AddToCheckinQueue(Lugage lugage)
+        {
+            if (_arrayIndex >= CounterLugageQueue.Length)
+            {
+                return false;
+            }
 
-        //public void OpenCounter()
-        //{
-        //    if (Thread.CurrentThread.IsAlive)
-        //    {
-        //        Open = true;
-        //        Console.WriteLine($"Counter: {CounterNumber} is now open");
-        //    }
-        //}
+            CounterLugageQueue[_arrayIndex] = lugage;
+            _arrayIndex++;
+            return true;
+        }
 
-        //public void CheckLugageIn()
-        //{
-        //    if (Thread.CurrentThread.IsAlive)
-        //    {
-        //        //if gate is closed
-        //        if (true)
-        //        {
-        //            //Don't allow checkin
-        //        }
-        //        //if gate isn't closed
-        //        else
-        //        {
-        //            //Take lugage from que, add to counterBuffer (Big conveyorbelt)
-        //        }
-        //    }
-        //}
+        public Lugage RetrieveFromQueue()
+        {
+            if (CounterLugageQueue[0] == null)
+            {
+                return null;
+            }
+
+            Lugage tempLugage = CounterLugageQueue[0];
+
+            for (int i = 1; i < _arrayIndex; i++)
+            {
+                CounterLugageQueue[i - 1] = CounterLugageQueue[i];
+            }
+
+            CounterLugageQueue[_arrayIndex - 1] = null;
+            _arrayIndex--;
+
+            return tempLugage;
+        }
     }
 }

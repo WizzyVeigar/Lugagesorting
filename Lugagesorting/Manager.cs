@@ -10,8 +10,8 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
-        public static Gate[] gates = new Gate[6];
-        public static Counter[] counters = new Counter[11];
+        public static Gate[] gates = new Gate[5];
+        public static Counter[] counters = new Counter[10];
 
         LugageProducer lugageProducer = new LugageProducer();
         FlightProducer flightProducer = new FlightProducer();
@@ -25,20 +25,20 @@ namespace Lugagesorting
         {
             // ------DATA CREATERS------ //
             //CreateLuage
-            //Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
-            //lugageCreaterThread.Start();
+            Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            lugageCreaterThread.Start();
 
             //CreatePlanes
             Thread planeCreaterThread = new Thread(flightProducer.GenerateFlights);
             planeCreaterThread.Start();
 
-            for (int i = 1; i < gates.Length; i++)
+            for (int i = 0; i < gates.Length; i++)
             {
                 gates[i] = new Gate(i);
                 Console.WriteLine($"Gate: {gates[i].GateNumber} has been created");
             }
 
-            for (int i = 1; i < counters.Length; i++)
+            for (int i = 0; i < counters.Length; i++)
             {
                 counters[i] = new Counter(i);
                 Console.WriteLine($"Counter: {counters[i].CounterNumber} has been created");
@@ -49,17 +49,11 @@ namespace Lugagesorting
             {
                 // ------DATA OPEN / CLOSE------ //
 
-                ////OpenCounter
-                //Thread counterCreaterThread = new Thread();
-                //counterCreaterThread.Start();
+                //OpenCounter
 
-                ////Opengate
-                //Thread gateCreaterThread = new Thread();
-                //gateCreaterThread.Start();
+                //Opengate
 
-                ////RunSorter
-                //Thread sorterThread = new Thread();
-                //sorterThread.Start();
+                //RunSorter
             }
         }
     }
