@@ -28,9 +28,9 @@ namespace Lugagesorting
                         string planeNumber = destinationNumber[0].ToString() + destinationNumber[1].ToString() + (random.Next(0, 300)).ToString();
                         int gateNumber = random.Next(0, 5);
 
-                        FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now, DateTime.Now);
+                        FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now.AddSeconds(5));
                         Manager.flightPlans[i] = flightPlan;
-                        Console.WriteLine($"Plane {Manager.flightPlans[i].PlaneNumber} skal til gate {Manager.flightPlans[i].GateNumber}. Flyet går til {Manager.flightPlans[i].destinations}. Gaten er åben fra {Manager.flightPlans[i].GateOpen} til {Manager.flightPlans[i].GateClose}");
+                        Console.WriteLine($"Plane {Manager.flightPlans[i].PlaneNumber} skal til gate {Manager.flightPlans[i].GateNumber}. Flyet går til {Manager.flightPlans[i].destinations} og er {Manager.flightPlans[i].DepartureTime}");
                     }
                     Console.WriteLine();
 

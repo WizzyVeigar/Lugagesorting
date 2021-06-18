@@ -15,8 +15,7 @@ namespace Lugagesorting
     {
         private string _planeNumber;
         private int _gateNumber;
-        private DateTime _gateOpen;
-        private DateTime _gateClose;
+        private DateTime _departureTime;
 
         public Destination destinations;
 
@@ -31,16 +30,10 @@ namespace Lugagesorting
             get { return _gateNumber; }
             set { _gateNumber = value; }
         }
-
-        public DateTime GateOpen
+        public DateTime DepartureTime
         {
-            get { return _gateOpen; }
-            set { _gateOpen = value; }
-        }
-        public DateTime GateClose
-        {
-            get { return _gateClose; }
-            set { _gateClose = value; }
+            get { return _departureTime; }
+            set { _departureTime = value; }
         }
 
         public FlightPlan()
@@ -48,13 +41,12 @@ namespace Lugagesorting
 
         }
 
-        public FlightPlan(string planeNumber, int gateNumber, Destination destination, DateTime gateOpen, DateTime gateClose)
+        public FlightPlan(string planeNumber, int gateNumber, Destination destination, DateTime departureTime)
         {
             PlaneNumber = planeNumber;
             GateNumber = gateNumber;
             destinations = destination;
-            GateOpen = gateOpen;
-            GateClose = gateClose;
+            DepartureTime = departureTime;
         }
     }
 }

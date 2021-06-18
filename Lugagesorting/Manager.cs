@@ -23,18 +23,6 @@ namespace Lugagesorting
 
         public void SimulationStart()
         {
-            // ------DATA CREATERS------ //
-            //CreateLuage
-            if (counters[9] != null)
-            {
-                Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
-                lugageCreaterThread.Start();
-            }
-
-            //CreatePlanes
-            Thread planeCreaterThread = new Thread(flightProducer.GenerateFlights);
-            planeCreaterThread.Start();
-
             for (int i = 0; i < gates.Length; i++)
             {
                 gates[i] = new Gate(i);
@@ -46,6 +34,15 @@ namespace Lugagesorting
                 counters[i] = new Counter(i);
                 Console.WriteLine($"Counter: {counters[i].CounterNumber} has been created");
             }
+
+            // ------DATA CREATERS------ //
+            //CreateLuage
+            Thread lugageCreaterThread = new Thread(lugageProducer.GenerateLugage);
+            lugageCreaterThread.Start();
+
+            //CreatePlanes
+            Thread planeCreaterThread = new Thread(flightProducer.GenerateFlights);
+            planeCreaterThread.Start();
 
             //everything needs to run in here while the thread is alive. (while the program runs, this needs to run)
             while (Thread.CurrentThread.IsAlive)

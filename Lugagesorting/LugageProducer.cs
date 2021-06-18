@@ -21,7 +21,6 @@ namespace Lugagesorting
                     {
                         if (Monitor.TryEnter(counter.CounterLugageQueue))
                         {
-
                             string lugageNumber = Manager.flightPlans[random.Next(0, 9)].PlaneNumber + Manager.flightPlans[random.Next(0, 9)].destinations;
                             Lugage lugage = new Lugage(lugageNumber, random.Next(1, 40), Manager.flightPlans[random.Next(0, 9)].PlaneNumber);
                             while (!counter.AddToCheckinQueue(lugage))
