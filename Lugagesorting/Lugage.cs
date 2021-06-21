@@ -65,7 +65,5 @@ namespace Lugagesorting
             PassengerNumber = passengerNumber;
             FlightNumber = flightNumber;
         }
-
-
     }
 }

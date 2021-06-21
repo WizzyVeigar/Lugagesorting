@@ -33,5 +33,7 @@
         </Grid.RowDefinitions>
 
         <Button Name="StartSimulation" Grid.Column="2" Grid.Row="7" Content="START SIMULATION" Click="StartSimulation_Click"></Button>
+        <TextBox id="Manager"></TextBox>
+        <TextBox id="Sorter"></TextBox>
     </Grid>
 </Window>

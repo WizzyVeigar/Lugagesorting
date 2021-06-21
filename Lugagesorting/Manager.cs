@@ -17,22 +17,26 @@ namespace Lugagesorting
         FlightProducer flightProducer = new FlightProducer();
 
         public static FlightPlan[] flightPlans = new FlightPlan[10];
-        public static Lugage[] sorterConveyorbelt = new Lugage[100];
+        public static Lugage[] sorterConveyorbelt = new Lugage[300];
 
-        static Lugage[] counterBuffer = new Lugage[100];
+        //Delegate is a way to send a class.
+        public delegate void Print(DataPrinter printer);
+        public static event Print PrintEvent;
+
+        //static Lugage[] counterBuffer = new Lugage[100];
 
         public void SimulationStart()
         {
             for (int i = 0; i < gates.Length; i++)
             {
                 gates[i] = new Gate(i);
-                Console.WriteLine($"Gate: {gates[i].GateNumber} has been created");
+                PrintEvent?.Invoke(new DataPrinter($"Gate: {gates[i].GateNumber} has been created", DataPrinter.DataTypePrint.ManagerData));
             }
 
             for (int i = 0; i < counters.Length; i++)
             {
                 counters[i] = new Counter(i);
-                Console.WriteLine($"Counter: {counters[i].CounterNumber} has been created");
+                PrintEvent?.Invoke(new DataPrinter($"Counter: {counters[i].CounterNumber} has been created", DataPrinter.DataTypePrint.ManagerData));
             }
 
             // ------DATA CREATERS------ //
@@ -49,12 +53,23 @@ namespace Lugagesorting
             {
                 // ------DATA OPEN / CLOSE------ //
 
-                //OpenCounter
-
                 //Opengate
 
                 //RunSorter
             }
+        }
+
+        public static int AmountInConveyorbelt()
+        {
+            int AmountInArray = 0;
+            for (int i = 0; i < sorterConveyorbelt.Length; i++)
+            {
+                if (sorterConveyorbelt[i] != null)
+                {
+                    AmountInArray += 1;
+                }
+            }
+            return AmountInArray;
         }
     }
 }

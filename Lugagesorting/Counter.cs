@@ -59,15 +59,15 @@ namespace Lugagesorting
                         if (IsOpen)
                         {
                             //And the lugageu queue is empty
-                            while (CounterLugageQueue[0] == null)
+                            while (AmountInArray() == 0)
                             {
                                 //tell the thread to wait for 2 seconds.
+                                Console.WriteLine("Waiting for luggage");
                                 Monitor.Wait(CounterLugageQueue, 2000);
                             }
                         }
-
                         //Start checking in lugage.
-
+                        CheckLugageIn();
                     }
                 }
             }
@@ -79,14 +79,26 @@ namespace Lugagesorting
         /// <returns>true or false wether theres room for lugage</returns>
         public bool AddToCheckinQueue(Lugage lugage)
         {
-            if (_arrayIndex >= CounterLugageQueue.Length)
+            for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
-                return false;
-            }
+                if (CounterLugageQueue[i] == null)
+                {
+                    CounterLugageQueue[i] = lugage; //We get our drink from our "Get Drink".
 
-            CounterLugageQueue[_arrayIndex] = lugage;
-            _arrayIndex++;
-            return true;
+                    //Monitor.Pulse(drinks);
+                    //Monitor.Exit(drinks); //If we dont have exit here, we wont be able to exit if it has an empty spot..
+                    return true; //Returns true if we have added a drink (hence the bool)
+                }
+            }
+            return false;
+            //if (_arrayIndex >= CounterLugageQueue.Length)
+            //{
+            //    return false;
+            //}
+
+            //CounterLugageQueue[_arrayIndex] = lugage;
+            //_arrayIndex++;
+            //return true;
         }
 
         /// <summary>
@@ -95,33 +107,58 @@ namespace Lugagesorting
         /// <returns>Either null or the temp lugage from array index 1, so that it consumes from the array as a queue.</returns>
         public Lugage RetrieveFromQueue()
         {
-            if (CounterLugageQueue[0] == null)
+            for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
-                return null;
+                if (CounterLugageQueue[i] != null)
+                {
+                    Lugage d = CounterLugageQueue[i];
+                    //if (delete == true) //Bool value set to true if we want to delete the item, and set to false if we want to check if there is an item in the array.
+                    //{   //Since we are consuming the item se set it to true, so we set the i of drinks to null.
+                    CounterLugageQueue[i] = null;
+                    //}
+                    return d; //Returns the drink we have "found" in our splitter array.
+                }
             }
+            return null; //Returns nothing since we have nothing in the array. Error message in splitter.
 
-            Lugage tempLugage = CounterLugageQueue[0];
+            //if (CounterLugageQueue[0] == null)
+            //{
+            //    return null;
+            //}
 
-            for (int i = 1; i < _arrayIndex; i++)
+            //Lugage tempLugage = CounterLugageQueue[0];
+
+            //for (int i = 1; i < _arrayIndex; i++)
+            //{
+            //    CounterLugageQueue[i - 1] = CounterLugageQueue[i];
+            //}
+
+            //CounterLugageQueue[_arrayIndex - 1] = null;
+            //_arrayIndex--;
+
+            //return tempLugage;
+        }
+
+        public int AmountInArray()
+        {
+            int AmountInArray = 0;
+            for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
-                CounterLugageQueue[i - 1] = CounterLugageQueue[i];
+                if (CounterLugageQueue[i] != null)
+                {
+                    AmountInArray += 1;
+                }
             }
-
-            CounterLugageQueue[_arrayIndex - 1] = null;
-            _arrayIndex--;
-
-            return tempLugage;
+            return AmountInArray;
         }
 
         public void CheckLugageIn()
         {
             while (Thread.CurrentThread.IsAlive)
             {
-                //while (IsOpen)
-                //{
                 if (Monitor.TryEnter(CounterLugageQueue))
                 {
-                    if (CounterLugageQueue == null)
+                    if (AmountInArray() == 0)
                     {
                         Console.WriteLine("Counter queue is empty");
                         Thread.Sleep(2000);
@@ -132,19 +169,17 @@ namespace Lugagesorting
                         if (Manager.sorterConveyorbelt[i] == null)
                         {
                             Lugage tempLugage = RetrieveFromQueue();
-                            Manager.sorterConveyorbelt[i] = tempLugage;
-                            Console.WriteLine($"{tempLugage.LugageNumber} has now been added to spot {i} on the conveyorbelt");
-                            Thread.Sleep(random.Next(0, 5000));
-                        }
-                        else
-                        {
-                            Console.WriteLine("Sorter conveyor is full, cannot insert baggage till there is room.");
+                            if (tempLugage != null)
+                            {
+                                Manager.sorterConveyorbelt[i] = tempLugage;
+                                Console.WriteLine($"{tempLugage.LugageNumber} has now been added to spot {i} on the conveyorbelt");
+                                Thread.Sleep(random.Next(0, 5000));
+                            }
                         }
                     }
                     Monitor.PulseAll(CounterLugageQueue);
                     Monitor.Exit(CounterLugageQueue);
                 }
-                //}
             }
         }
     }
