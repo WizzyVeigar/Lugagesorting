@@ -62,7 +62,7 @@ namespace Lugagesorting
                             while (AmountInArray() == 0)
                             {
                                 //tell the thread to wait for 2 seconds.
-                                Console.WriteLine("Waiting for luggage");
+                                Console.WriteLine($"Counter {CounterNumber} is waiting for luggage");
                                 Monitor.Wait(CounterLugageQueue, 2000);
                             }
                         }
@@ -72,39 +72,29 @@ namespace Lugagesorting
                 }
             }
         }
+
         /// <summary>
-        /// Adds lugages to our counter's lugage queue, if the counter is open.
+        /// 
         /// </summary>
-        /// <param name="lugage">used to make an arrayindex into a piece of lugage</param>
-        /// <returns>true or false wether theres room for lugage</returns>
+        /// <param name="lugage"></param>
+        /// <returns></returns>
         public bool AddToCheckinQueue(Lugage lugage)
         {
             for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
                 if (CounterLugageQueue[i] == null)
                 {
-                    CounterLugageQueue[i] = lugage; //We get our drink from our "Get Drink".
-
-                    //Monitor.Pulse(drinks);
-                    //Monitor.Exit(drinks); //If we dont have exit here, we wont be able to exit if it has an empty spot..
-                    return true; //Returns true if we have added a drink (hence the bool)
+                    CounterLugageQueue[i] = lugage;
+                    return true;
                 }
             }
             return false;
-            //if (_arrayIndex >= CounterLugageQueue.Length)
-            //{
-            //    return false;
-            //}
-
-            //CounterLugageQueue[_arrayIndex] = lugage;
-            //_arrayIndex++;
-            //return true;
         }
 
         /// <summary>
-        /// Retrieves the lugage from the queue so it can be chekced in.
+        /// 
         /// </summary>
-        /// <returns>Either null or the temp lugage from array index 1, so that it consumes from the array as a queue.</returns>
+        /// <returns></returns>
         public Lugage RetrieveFromQueue()
         {
             for (int i = 0; i < CounterLugageQueue.Length; i++)
@@ -112,33 +102,17 @@ namespace Lugagesorting
                 if (CounterLugageQueue[i] != null)
                 {
                     Lugage d = CounterLugageQueue[i];
-                    //if (delete == true) //Bool value set to true if we want to delete the item, and set to false if we want to check if there is an item in the array.
-                    //{   //Since we are consuming the item se set it to true, so we set the i of drinks to null.
                     CounterLugageQueue[i] = null;
-                    //}
-                    return d; //Returns the drink we have "found" in our splitter array.
+                    return d;
                 }
             }
-            return null; //Returns nothing since we have nothing in the array. Error message in splitter.
-
-            //if (CounterLugageQueue[0] == null)
-            //{
-            //    return null;
-            //}
-
-            //Lugage tempLugage = CounterLugageQueue[0];
-
-            //for (int i = 1; i < _arrayIndex; i++)
-            //{
-            //    CounterLugageQueue[i - 1] = CounterLugageQueue[i];
-            //}
-
-            //CounterLugageQueue[_arrayIndex - 1] = null;
-            //_arrayIndex--;
-
-            //return tempLugage;
+            return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int AmountInArray()
         {
             int AmountInArray = 0;
@@ -152,6 +126,9 @@ namespace Lugagesorting
             return AmountInArray;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CheckLugageIn()
         {
             while (Thread.CurrentThread.IsAlive)
@@ -171,8 +148,10 @@ namespace Lugagesorting
                             Lugage tempLugage = RetrieveFromQueue();
                             if (tempLugage != null)
                             {
+                                DateTime currentTime = DateTime.Now;
+                                tempLugage.TimeStampCheckin = currentTime;
                                 Manager.sorterConveyorbelt[i] = tempLugage;
-                                Console.WriteLine($"{tempLugage.LugageNumber} has now been added to spot {i} on the conveyorbelt");
+                                Console.WriteLine($"{tempLugage.LugageNumber} has now been added to spot {i} on the conveyorbelt, with timestamp {tempLugage.TimeStampCheckin}");
                                 Thread.Sleep(random.Next(0, 5000));
                             }
                         }

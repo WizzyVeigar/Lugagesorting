@@ -26,13 +26,19 @@ namespace Lugagesorting
                         int destination = random.Next(0, 3);
                         string destinationNumber = ((Destination)destination).ToString().ToUpper();
                         string planeNumber = destinationNumber[0].ToString() + destinationNumber[1].ToString() + (random.Next(0, 300)).ToString();
-                        int gateNumber = random.Next(0, 5);
 
-                        FlightPlan flightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now.AddSeconds(5));
-                        Manager.flightPlans[i] = flightPlan;
-                        Console.WriteLine($"Plane {Manager.flightPlans[i].PlaneNumber} skal til gate {Manager.flightPlans[i].GateNumber}. Flyet går til {Manager.flightPlans[i].destinations} og er {Manager.flightPlans[i].DepartureTime}");
+                        int gateNumber = random.Next(0, Manager.gates.Length);
+
+                        if (Monitor.TryEnter(Manager.gates[gateNumber]))
+                        {
+                            if (Manager.gates[gateNumber].FlightPlan == null)
+                            {
+                                Manager.gates[gateNumber].FlightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now.AddSeconds(random.Next(0, 60)));
+                                Manager.flightPlans[i] = Manager.gates[gateNumber].FlightPlan;
+                                Console.WriteLine($"Flight {Manager.gates[gateNumber].FlightPlan.PlaneNumber} is going to gate {gateNumber}, and is departing at {Manager.gates[gateNumber].FlightPlan.DepartureTime} to {Manager.gates[gateNumber].FlightPlan.destinations}");
+                            }
+                        }
                     }
-                    Console.WriteLine();
 
                     Monitor.PulseAll(Manager.flightPlans);
                     Monitor.Exit(Manager.flightPlans);

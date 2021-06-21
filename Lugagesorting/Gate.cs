@@ -11,6 +11,7 @@ namespace Lugagesorting
         private bool _isOpen = false;
         private Lugage[] _gateBuffer = new Lugage[15];
         private Thread _t;
+        private FlightPlan _flightPlan;
 
         public int GateNumber
         {
@@ -36,6 +37,12 @@ namespace Lugagesorting
             set { _t = value; }
         }
 
+        public FlightPlan FlightPlan
+        {
+            get { return _flightPlan; }
+            set { _flightPlan = value; }
+        }
+
         public Gate(int gateNumber)
         {
             GateNumber = gateNumber;
@@ -45,7 +52,7 @@ namespace Lugagesorting
 
         public void Worker()
         {
-            while (true)
+            while (Thread.CurrentThread.IsAlive)
             {
 
             }

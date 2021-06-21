@@ -33,16 +33,17 @@ namespace Lugagesorting
             }
         }
     }
-
     
     class DataPrinter
     {
+        //Chooses the datatype, you want to return
         public enum DataTypePrint
         {
             BaggageData,
             ManagerData
         }
 
+        //Creates a string with the message.
         private string _message;
 
         public string Message
@@ -53,6 +54,7 @@ namespace Lugagesorting
 
         public DataTypePrint dataTypePrint;
 
+        //Creates our dataprinter constructer, which takes a string which is our message, and our 
         public DataPrinter(string message, DataTypePrint dateTypePrint)
         {
             this.Message = message;
