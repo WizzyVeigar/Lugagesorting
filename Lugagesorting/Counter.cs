@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Lugagesorting
 {
-    class Counter: IOpenClose
+    class Counter : IOpenClose
     {
         Random random = new Random();
         private int _counterNumber;
@@ -111,6 +111,41 @@ namespace Lugagesorting
             _arrayIndex--;
 
             return tempLugage;
+        }
+
+        public void CheckLugageIn()
+        {
+            while (Thread.CurrentThread.IsAlive)
+            {
+                //while (IsOpen)
+                //{
+                if (Monitor.TryEnter(CounterLugageQueue))
+                {
+                    if (CounterLugageQueue == null)
+                    {
+                        Console.WriteLine("Counter queue is empty");
+                        Thread.Sleep(2000);
+                    }
+
+                    for (int i = 0; i < Manager.sorterConveyorbelt.Length; i++)
+                    {
+                        if (Manager.sorterConveyorbelt[i] == null)
+                        {
+                            Lugage tempLugage = RetrieveFromQueue();
+                            Manager.sorterConveyorbelt[i] = tempLugage;
+                            Console.WriteLine($"{tempLugage.LugageNumber} has now been added to spot {i} on the conveyorbelt");
+                            Thread.Sleep(random.Next(0, 5000));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorter conveyor is full, cannot insert baggage till there is room.");
+                        }
+                    }
+                    Monitor.PulseAll(CounterLugageQueue);
+                    Monitor.Exit(CounterLugageQueue);
+                }
+                //}
+            }
         }
     }
 }

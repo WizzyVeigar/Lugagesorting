@@ -11,11 +11,11 @@ namespace Lugagesorting
         {
             while (Thread.CurrentThread.IsAlive)
             {
-                if (Monitor.TryEnter(Manager.mainConveyorBelt))
+                if (Monitor.TryEnter(Manager.sorterConveyorbelt))
                 {
-                    while (Manager.mainConveyorBelt[99] == null)
+                    while (Manager.sorterConveyorbelt[99] == null)
                     {
-                        Monitor.Wait(Manager.mainConveyorBelt, 2000);
+                        Monitor.Wait(Manager.sorterConveyorbelt, 2000);
                         Console.WriteLine("Sorter buffer is empty. (waiting for new lugage)");
                     }
 
@@ -23,6 +23,8 @@ namespace Lugagesorting
                     {
 
                     }
+                    Monitor.Wait(Manager.sorterConveyorbelt, 2000);
+                    Monitor.PulseAll(Manager.sorterConveyorbelt);
                 }
             }
         }

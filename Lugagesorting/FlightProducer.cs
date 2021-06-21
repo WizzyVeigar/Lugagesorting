@@ -16,7 +16,7 @@ namespace Lugagesorting
                 if (Monitor.TryEnter(Manager.flightPlans))
                 {
 
-                    while (Manager.flightPlans[4] != null)
+                    while (Manager.flightPlans[9] != null)
                     {
                         Monitor.Wait(Manager.flightPlans);
                     }
