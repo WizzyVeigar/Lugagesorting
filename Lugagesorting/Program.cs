@@ -17,6 +17,10 @@ namespace Lugagesorting
             Manager.PrintEvent += PrintDataEvent;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="printer">Printer chooses what we want to print</param>
         private static void PrintDataEvent(DataPrinter printer)
         {
             switch (printer.dataTypePrint)
@@ -33,7 +37,9 @@ namespace Lugagesorting
             }
         }
     }
-    
+    /// <summary>
+    /// Contains an enum of types of data we have (baggage data, Manager date). Can just get added to. For instance we could create a CheckInData as well to show the checkin data.
+    /// </summary>
     class DataPrinter
     {
         //Chooses the datatype, you want to return
@@ -52,9 +58,14 @@ namespace Lugagesorting
             set { _message = value; }
         }
 
+        //Allows us to set the datatype depending on the choices in the Enum.
         public DataTypePrint dataTypePrint;
 
-        //Creates our dataprinter constructer, which takes a string which is our message, and our 
+        /// <summary>
+        /// Creates our DataPrinter, which sets the message and the datatype.
+        /// </summary>
+        /// <param name="message">Gets set to the message we would like to display</param>
+        /// <param name="dateTypePrint">Gets set to the Datatype we wanna display (BaggageData or ManagerData)</param>
         public DataPrinter(string message, DataTypePrint dateTypePrint)
         {
             this.Message = message;

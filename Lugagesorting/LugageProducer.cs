@@ -15,33 +15,35 @@ namespace Lugagesorting
             {
                 for (int i = 0; i < Manager.counters.Length; i++)
                 {
-                    Counter counter = Manager.counters[random.Next(0, 9)];
-
-                    for (int j = 0; j < Manager.counters[i].CounterLugageQueue.Length; j++)
+                    Counter counter = Manager.counters[random.Next(0, 4)];
+                    if (counter.IsOpen)
                     {
-                        if (Monitor.TryEnter(counter.CounterLugageQueue))
+                        for (int j = 0; j < Manager.counters[i].CounterLugageQueue.Length; j++)
                         {
-                            int randomFlightplanIndex = random.Next(0, Manager.flightPlans.Length);
-                            if (Manager.flightPlans[randomFlightplanIndex] != null)
+                            if (Monitor.TryEnter(counter.CounterLugageQueue))
                             {
-                                if (Monitor.TryEnter(Manager.flightPlans[randomFlightplanIndex]))
+                                int randomFlightplanIndex = random.Next(0, Manager.flightPlans.Length);
+                                if (Manager.flightPlans[randomFlightplanIndex] != null)
                                 {
-                                    string lugageNumber = Manager.flightPlans[randomFlightplanIndex].PlaneNumber.ToString() + random.Next(0, 50).ToString();
-                                    Lugage lugage = new Lugage(lugageNumber, random.Next(1, 10000), Manager.flightPlans[randomFlightplanIndex].PlaneNumber);
-
-                                    Console.WriteLine($"Lugage {lugage.LugageNumber} has been created in counter {counter.CounterNumber}");
-
-                                    while (!counter.AddToCheckinQueue(lugage))
+                                    if (Monitor.TryEnter(Manager.flightPlans[randomFlightplanIndex]))
                                     {
-                                        Monitor.Wait(counter.CounterLugageQueue, 2000);
+                                        string lugageNumber = Manager.flightPlans[randomFlightplanIndex].PlaneNumber.ToString() + random.Next(0, 50).ToString();
+                                        Lugage lugage = new Lugage(lugageNumber, random.Next(1, 10000), Manager.flightPlans[randomFlightplanIndex].PlaneNumber);
+
+                                        Console.WriteLine($"Lugage {lugage.LugageNumber} has been created in counter {counter.CounterNumber}");
+
+                                        while (!counter.AddToCheckinCounterQueue(lugage))
+                                        {
+                                            Monitor.Wait(counter.CounterLugageQueue, 2000);
+                                        }
                                     }
                                 }
+
+                                Thread.Sleep(1000);
+
+                                Monitor.PulseAll(counter.CounterLugageQueue);
+                                Monitor.Exit(counter.CounterLugageQueue);
                             }
-
-                            //Thread.Sleep(1000);
-
-                            Monitor.PulseAll(counter.CounterLugageQueue);
-                            Monitor.Exit(counter.CounterLugageQueue);
                         }
                     }
                 }

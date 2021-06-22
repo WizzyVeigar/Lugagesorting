@@ -24,5 +24,24 @@ namespace LugageSorterGUI
         {
             InitializeComponent();
         }
+
+        //private static void PrintDataEvent(DataPrinter printer)
+        //{
+        //    switch (printer.dataTypePrint)
+        //    {
+        //        case DataPrinter.DataTypePrint.BaggageData:
+        //            break;
+        //        case DataPrinter.DataTypePrint.ManagerData:
+        //            Manager.Textbox.Manager.Text = printer.Message;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+
+        //private void StartSimulation_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
 }

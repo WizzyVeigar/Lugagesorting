@@ -9,7 +9,7 @@ namespace Lugagesorting
     {
         Random random = new Random();
         private int _counterNumber;
-        private bool _isOpen = true;
+        private bool _isOpen = false;
         public Lugage[] _counterLugageQueue = new Lugage[15];
         private int _arrayIndex = 0;
         private Thread _t;
@@ -59,7 +59,7 @@ namespace Lugagesorting
                         if (IsOpen)
                         {
                             //And the lugageu queue is empty
-                            while (AmountInArray() == 0)
+                            while (AmountInCounterArray() == 0)
                             {
                                 //tell the thread to wait for 2 seconds.
                                 Console.WriteLine($"Counter {CounterNumber} is waiting for luggage");
@@ -78,7 +78,7 @@ namespace Lugagesorting
         /// </summary>
         /// <param name="lugage"></param>
         /// <returns></returns>
-        public bool AddToCheckinQueue(Lugage lugage)
+        public bool AddToCheckinCounterQueue(Lugage lugage)
         {
             for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
@@ -95,7 +95,7 @@ namespace Lugagesorting
         /// 
         /// </summary>
         /// <returns></returns>
-        public Lugage RetrieveFromQueue()
+        public Lugage RetrieveFromCounterQueue()
         {
             for (int i = 0; i < CounterLugageQueue.Length; i++)
             {
@@ -113,7 +113,7 @@ namespace Lugagesorting
         /// 
         /// </summary>
         /// <returns></returns>
-        public int AmountInArray()
+        public int AmountInCounterArray()
         {
             int AmountInArray = 0;
             for (int i = 0; i < CounterLugageQueue.Length; i++)
@@ -135,9 +135,9 @@ namespace Lugagesorting
             {
                 if (Monitor.TryEnter(CounterLugageQueue))
                 {
-                    if (AmountInArray() == 0)
+                    if (AmountInCounterArray() == 0)
                     {
-                        Console.WriteLine("Counter queue is empty");
+                        Console.WriteLine($"Counter {CounterNumber} queue is empty");
                         Thread.Sleep(2000);
                     }
 
@@ -145,7 +145,7 @@ namespace Lugagesorting
                     {
                         if (Manager.sorterConveyorbelt[i] == null)
                         {
-                            Lugage tempLugage = RetrieveFromQueue();
+                            Lugage tempLugage = RetrieveFromCounterQueue();
                             if (tempLugage != null)
                             {
                                 DateTime currentTime = DateTime.Now;
