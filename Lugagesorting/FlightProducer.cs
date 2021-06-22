@@ -16,7 +16,7 @@ namespace Lugagesorting
                 if (Monitor.TryEnter(Manager.flightPlans))
                 {
 
-                    while (Manager.flightPlans[9] != null)
+                    while (Manager.flightPlans[2] != null)
                     {
                         Monitor.Wait(Manager.flightPlans);
                     }
@@ -26,14 +26,14 @@ namespace Lugagesorting
                         int destination = random.Next(0, 3);
                         string destinationNumber = ((Destination)destination).ToString().ToUpper();
                         string planeNumber = destinationNumber[0].ToString() + destinationNumber[1].ToString() + (random.Next(0, 300)).ToString();
-
+                        DateTime departureTime = DateTime.Now.AddSeconds(random.Next(20, 50));
                         int gateNumber = random.Next(0, Manager.gates.Length);
 
                         if (Monitor.TryEnter(Manager.gates[gateNumber]))
                         {
                             if (Manager.gates[gateNumber].FlightPlan == null)
                             {
-                                Manager.gates[gateNumber].FlightPlan = new FlightPlan(planeNumber, gateNumber, (Destination)destination, DateTime.Now.AddSeconds(random.Next(0, 60)));
+                                Manager.gates[gateNumber].FlightPlan = new FlightPlan(planeNumber, gateNumber, 300, (Destination)destination, departureTime);
                                 Manager.flightPlans[i] = Manager.gates[gateNumber].FlightPlan;
                                 Console.WriteLine($"Flight {Manager.gates[gateNumber].FlightPlan.PlaneNumber} is going to gate {gateNumber}, and is departing at {Manager.gates[gateNumber].FlightPlan.DepartureTime} to {Manager.gates[gateNumber].FlightPlan.destinations}");
                             }

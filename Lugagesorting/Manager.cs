@@ -10,13 +10,13 @@ namespace Lugagesorting
     /// </summary>
     class Manager
     {
-        public static Gate[] gates = new Gate[5];
-        public static Counter[] counters = new Counter[5];
+        public static Gate[] gates = new Gate[3];
+        public static Counter[] counters = new Counter[3];
 
         LugageProducer lugageProducer = new LugageProducer();
         FlightProducer flightProducer = new FlightProducer();
 
-        public static FlightPlan[] flightPlans = new FlightPlan[10];
+        public static FlightPlan[] flightPlans = new FlightPlan[3];
         public static Lugage[] sorterConveyorbelt = new Lugage[300];
 
         //Delegate is a way to send a class. We says that the print class needs a dataprinter, which we call printer. (It requires a string and the type of data it is. Either ManagerData or BagageData)
@@ -30,7 +30,6 @@ namespace Lugagesorting
             for (int i = 0; i < gates.Length; i++)
             {
                 gates[i] = new Gate(i);
-                //Create a 
                 PrintEvent?.Invoke(new DataPrinter($"Gate: {gates[i].GateNumber} has been created", DataPrinter.DataTypePrint.ManagerData));
             }
 

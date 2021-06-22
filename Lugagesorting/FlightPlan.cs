@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Lugagesorting
 {
+    /// <summary>
+    /// Creates an enum with the destinations for the planes.
+    /// </summary>
     public enum Destination
     {
         Germany,
@@ -11,11 +14,15 @@ namespace Lugagesorting
         Finland
     }
 
+    /// <summary>
+    /// Creates a flightplan which contains information about the planes
+    /// </summary>
     class FlightPlan
     {
         private string _planeNumber;
         private int _gateNumber;
         private DateTime _departureTime;
+        private int _planeSeats;
 
         public Destination destinations;
 
@@ -37,12 +44,20 @@ namespace Lugagesorting
             set { _departureTime = value; }
         }
 
-        public FlightPlan(string planeNumber, int gateNumber, Destination destination, DateTime departureTime)
+        public int PlaneSeats
+        {
+            get { return _planeSeats; }
+            set { _planeSeats = value; }
+        }
+
+
+        public FlightPlan(string planeNumber, int gateNumber, int planeSeats, Destination destination, DateTime departureTime)
         {
             PlaneNumber = planeNumber;
             GateNumber = gateNumber;
             destinations = destination;
             DepartureTime = departureTime;
+            PlaneSeats = planeSeats;
         }
     }
 }

@@ -9,9 +9,8 @@ namespace Lugagesorting
     {
         Random random = new Random();
         private int _counterNumber;
-        private bool _isOpen = false;
+        private bool _isOpen = true;
         public Lugage[] _counterLugageQueue = new Lugage[15];
-        private int _arrayIndex = 0;
         private Thread _t;
 
         public int CounterNumber
@@ -47,24 +46,46 @@ namespace Lugagesorting
 
         public void Worker()
         {
+            int tempOpenDeparture = 300;
+            int tempCloseDeparture = 40;
+
             while (Thread.CurrentThread.IsAlive)
             {
-                //While the counter is open, do the following
-                while (IsOpen)
+                //Try and enter a thread using the lugage que as a lock
+                if (Monitor.TryEnter(CounterLugageQueue))
                 {
-                    //Try and enter a thread using the lugage que as a lock
-                    if (Monitor.TryEnter(CounterLugageQueue))
+                    //for (int i = 0; i < Manager.flightPlans.Length; i++)
+                    //{
+                    //    if (Manager.flightPlans[i] == null)
+                    //    {
+                    //        Monitor.Wait(CounterLugageQueue, 2000);
+                    //    }
+                    //    if (Manager.flightPlans[i] != null && CounterLugageQueue[i] != null)
+                    //    {
+                    //        //    if (Manager.flightPlans[i].PlaneNumber == CounterLugageQueue[i].PlaneNumber)
+                    //        //    {
+                    //        if ((Manager.flightPlans[i].DepartureTime - DateTime.Now).TotalSeconds <= tempOpenDeparture && (Manager.flightPlans[i].DepartureTime - DateTime.Now).TotalSeconds >= tempCloseDeparture)
+                    //        {
+                    //            IsOpen = true;
+                    //        }
+                    //        else
+                    //        {
+                    //            IsOpen = false;
+                    //        }
+                    //        Monitor.PulseAll(CounterLugageQueue);
+                    //    }
+                    //    //}
+                    //}
+
+                    //While the counter is open, do the following
+                    if (IsOpen)
                     {
-                        //If the counter is open
-                        if (IsOpen)
+                        //And the lugageu queue is empty
+                        while (AmountInCounterArray() == 0)
                         {
-                            //And the lugageu queue is empty
-                            while (AmountInCounterArray() == 0)
-                            {
-                                //tell the thread to wait for 2 seconds.
-                                Console.WriteLine($"Counter {CounterNumber} is waiting for luggage");
-                                Monitor.Wait(CounterLugageQueue, 2000);
-                            }
+                            //tell the thread to wait for 2 seconds.
+                            Console.WriteLine($"Counter {CounterNumber} is waiting for luggage");
+                            Monitor.Wait(CounterLugageQueue, 2000);
                         }
                         //Start checking in lugage.
                         CheckLugageIn();
@@ -156,6 +177,7 @@ namespace Lugagesorting
                             }
                         }
                     }
+
                     Monitor.PulseAll(CounterLugageQueue);
                     Monitor.Exit(CounterLugageQueue);
                 }

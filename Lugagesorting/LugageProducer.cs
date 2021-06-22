@@ -15,7 +15,7 @@ namespace Lugagesorting
             {
                 for (int i = 0; i < Manager.counters.Length; i++)
                 {
-                    Counter counter = Manager.counters[random.Next(0, 4)];
+                    Counter counter = Manager.counters[random.Next(0, Manager.counters.Length)];
                     if (counter.IsOpen)
                     {
                         for (int j = 0; j < Manager.counters[i].CounterLugageQueue.Length; j++)
@@ -34,12 +34,13 @@ namespace Lugagesorting
 
                                         while (!counter.AddToCheckinCounterQueue(lugage))
                                         {
+                                            Console.WriteLine($"Counter {counter.CounterNumber} is closed");
                                             Monitor.Wait(counter.CounterLugageQueue, 2000);
                                         }
                                     }
                                 }
 
-                                Thread.Sleep(1000);
+                                Thread.Sleep(300);
 
                                 Monitor.PulseAll(counter.CounterLugageQueue);
                                 Monitor.Exit(counter.CounterLugageQueue);

@@ -9,6 +9,7 @@ namespace Lugagesorting
     {
         private int _gateNumber;
         private bool _isOpen = false;
+        private Lugage[] _planeLugage = new Lugage[50];
         private Lugage[] _gateBuffer = new Lugage[15];
         private Thread _t;
         private FlightPlan _flightPlan;
@@ -54,7 +55,7 @@ namespace Lugagesorting
         {
             while (Thread.CurrentThread.IsAlive)
             {
-
+                
             }
         }
     }
