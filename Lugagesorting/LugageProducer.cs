@@ -18,6 +18,7 @@ namespace Lugagesorting
                     Counter counter = Manager.counters[random.Next(0, Manager.counters.Length)];
                     if (counter.IsOpen)
                     {
+                        //Du looper på din counters[i], i stedet for den counter du fik på linje 18.
                         for (int j = 0; j < Manager.counters[i].CounterLugageQueue.Length; j++)
                         {
                             if (Monitor.TryEnter(counter.CounterLugageQueue))
